@@ -133,7 +133,7 @@ Partial Class Post
         lblLikes.Location = New Point(777, 189)
         lblLikes.MouseState = MaterialSkin.MouseState.HOVER
         lblLikes.Name = "lblLikes"
-        lblLikes.Size = New Size(31, 19)
+        lblLikes.Size = New Size(67, 19)
         lblLikes.TabIndex = 10
         lblLikes.Text = "7.3k"
         ' 

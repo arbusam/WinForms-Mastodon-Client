@@ -26,15 +26,16 @@ Partial Class Form1
         MaterialTabControl1 = New MaterialSkin.Controls.MaterialTabControl()
         TabPage1 = New TabPage()
         Panel1 = New Panel()
-        MaterialListView1 = New MaterialSkin.Controls.MaterialListView()
+        FlowLayoutPanel1 = New FlowLayoutPanel()
         TabPage2 = New TabPage()
+        FlowLayoutPanel2 = New FlowLayoutPanel()
         TabPage3 = New TabPage()
-        TabPage4 = New TabPage()
         MaterialTabSelector1 = New MaterialSkin.Controls.MaterialTabSelector()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         MaterialTabControl1.SuspendLayout()
         TabPage1.SuspendLayout()
         Panel1.SuspendLayout()
+        TabPage2.SuspendLayout()
         SuspendLayout()
         ' 
         ' PictureBox1
@@ -53,7 +54,6 @@ Partial Class Form1
         MaterialTabControl1.Controls.Add(TabPage1)
         MaterialTabControl1.Controls.Add(TabPage2)
         MaterialTabControl1.Controls.Add(TabPage3)
-        MaterialTabControl1.Controls.Add(TabPage4)
         MaterialTabControl1.Depth = 0
         MaterialTabControl1.Location = New Point(6, 133)
         MaterialTabControl1.MouseState = MaterialSkin.MouseState.HOVER
@@ -71,45 +71,48 @@ Partial Class Form1
         TabPage1.Padding = New Padding(3)
         TabPage1.Size = New Size(1480, 823)
         TabPage1.TabIndex = 0
-        TabPage1.Text = "TabPage1"
+        TabPage1.Text = "Public"
         TabPage1.UseVisualStyleBackColor = True
         ' 
         ' Panel1
         ' 
         Panel1.AutoScroll = True
-        Panel1.Controls.Add(MaterialListView1)
+        Panel1.Controls.Add(FlowLayoutPanel1)
         Panel1.Location = New Point(0, 0)
         Panel1.Name = "Panel1"
         Panel1.Size = New Size(1484, 827)
         Panel1.TabIndex = 0
         ' 
-        ' MaterialListView1
+        ' FlowLayoutPanel1
         ' 
-        MaterialListView1.AutoSizeTable = False
-        MaterialListView1.BackColor = Color.FromArgb(CByte(255), CByte(255), CByte(255))
-        MaterialListView1.BorderStyle = BorderStyle.None
-        MaterialListView1.Depth = 0
-        MaterialListView1.FullRowSelect = True
-        MaterialListView1.Location = New Point(6, 6)
-        MaterialListView1.MinimumSize = New Size(200, 100)
-        MaterialListView1.MouseLocation = New Point(-1, -1)
-        MaterialListView1.MouseState = MaterialSkin.MouseState.OUT
-        MaterialListView1.Name = "MaterialListView1"
-        MaterialListView1.OwnerDraw = True
-        MaterialListView1.Size = New Size(1468, 811)
-        MaterialListView1.TabIndex = 0
-        MaterialListView1.UseCompatibleStateImageBehavior = False
-        MaterialListView1.View = View.Details
+        FlowLayoutPanel1.AutoScroll = True
+        FlowLayoutPanel1.FlowDirection = FlowDirection.TopDown
+        FlowLayoutPanel1.Location = New Point(0, 0)
+        FlowLayoutPanel1.Name = "FlowLayoutPanel1"
+        FlowLayoutPanel1.Size = New Size(1480, 823)
+        FlowLayoutPanel1.TabIndex = 0
+        FlowLayoutPanel1.WrapContents = False
         ' 
         ' TabPage2
         ' 
+        TabPage2.Controls.Add(FlowLayoutPanel2)
         TabPage2.Location = New Point(4, 34)
         TabPage2.Name = "TabPage2"
         TabPage2.Padding = New Padding(3)
         TabPage2.Size = New Size(1480, 823)
         TabPage2.TabIndex = 1
-        TabPage2.Text = "TabPage2"
+        TabPage2.Text = "Trending"
         TabPage2.UseVisualStyleBackColor = True
+        ' 
+        ' FlowLayoutPanel2
+        ' 
+        FlowLayoutPanel2.AutoScroll = True
+        FlowLayoutPanel2.FlowDirection = FlowDirection.TopDown
+        FlowLayoutPanel2.Location = New Point(0, 0)
+        FlowLayoutPanel2.Name = "FlowLayoutPanel2"
+        FlowLayoutPanel2.Size = New Size(1480, 823)
+        FlowLayoutPanel2.TabIndex = 0
+        FlowLayoutPanel2.WrapContents = False
         ' 
         ' TabPage3
         ' 
@@ -117,17 +120,8 @@ Partial Class Form1
         TabPage3.Name = "TabPage3"
         TabPage3.Size = New Size(1480, 823)
         TabPage3.TabIndex = 2
-        TabPage3.Text = "TabPage3"
+        TabPage3.Text = "Search"
         TabPage3.UseVisualStyleBackColor = True
-        ' 
-        ' TabPage4
-        ' 
-        TabPage4.Location = New Point(4, 34)
-        TabPage4.Name = "TabPage4"
-        TabPage4.Size = New Size(1480, 823)
-        TabPage4.TabIndex = 3
-        TabPage4.Text = "TabPage4"
-        TabPage4.UseVisualStyleBackColor = True
         ' 
         ' MaterialTabSelector1
         ' 
@@ -159,6 +153,7 @@ Partial Class Form1
         MaterialTabControl1.ResumeLayout(False)
         TabPage1.ResumeLayout(False)
         Panel1.ResumeLayout(False)
+        TabPage2.ResumeLayout(False)
         ResumeLayout(False)
     End Sub
     Friend WithEvents PictureBox1 As PictureBox
@@ -167,8 +162,8 @@ Partial Class Form1
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents MaterialTabSelector1 As MaterialSkin.Controls.MaterialTabSelector
     Friend WithEvents TabPage3 As TabPage
-    Friend WithEvents TabPage4 As TabPage
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents MaterialListView1 As MaterialSkin.Controls.MaterialListView
+    Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
+    Friend WithEvents FlowLayoutPanel2 As FlowLayoutPanel
 
 End Class

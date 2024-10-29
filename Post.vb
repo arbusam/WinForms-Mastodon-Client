@@ -1,12 +1,12 @@
 ﻿Public Class Post
-    Public Sub New(username As String, email As String, content As String, likes As Integer, reposts As Integer, datePosted As Date, liked As Boolean)
+    Public Sub New(username As String, email As String, content As String, likes As Integer, replies As Integer, reposts As Integer, datePosted As Date, liked As Boolean)
         InitializeComponent()
 
         Dim likesString As String
-        If likes >= 1000 Then
-            likesString = (likes / 1000).ToString("0.0") & "k"
-        ElseIf likes >= 1000000 Then
+        If likes >= 1000000 Then
             likesString = (likes / 1000000).ToString("0.0") & "m"
+        ElseIf likes >= 1000 Then
+            likesString = (likes / 1000).ToString("0.0") & "k"
         Else
             likesString = likes.ToString()
         End If
@@ -34,6 +34,7 @@
         lblUsername.Text = email
         lblContent.Text = content
         lblLikes.Text = likesString
+        lblReplies.Text = replies.ToString()
         lblReposts.Text = reposts.ToString()
         lblTime.Text = timeString
 
