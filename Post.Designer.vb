@@ -23,7 +23,7 @@ Partial Class Post
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Post))
-        PictureBox1 = New PictureBox()
+        avatarImage = New PictureBox()
         lblName = New MaterialSkin.Controls.MaterialLabel()
         lblUsername = New MaterialSkin.Controls.MaterialLabel()
         lblTime = New MaterialSkin.Controls.MaterialLabel()
@@ -33,27 +33,26 @@ Partial Class Post
         lblLikes = New MaterialSkin.Controls.MaterialLabel()
         LinkLabel1 = New LinkLabel()
         Button1 = New Button()
-        btnLike = New Button()
-        Button2 = New Button()
-        Button3 = New Button()
+        PictureBox1 = New PictureBox()
+        CType(avatarImage, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
-        ' PictureBox1
+        ' avatarImage
         ' 
-        PictureBox1.Image = My.Resources.Resources.account_circle_24dp_536DFE_FILL0_wght400_GRAD0_opsz24
-        PictureBox1.Location = New Point(3, 3)
-        PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(40, 40)
-        PictureBox1.SizeMode = PictureBoxSizeMode.Zoom
-        PictureBox1.TabIndex = 0
-        PictureBox1.TabStop = False
+        avatarImage.Image = My.Resources.Resources.account_circle_24dp_536DFE_FILL0_wght400_GRAD0_opsz24
+        avatarImage.Location = New Point(3, 3)
+        avatarImage.Name = "avatarImage"
+        avatarImage.Size = New Size(40, 40)
+        avatarImage.SizeMode = PictureBoxSizeMode.Zoom
+        avatarImage.TabIndex = 0
+        avatarImage.TabStop = False
         ' 
         ' lblName
         ' 
         lblName.AutoSize = True
         lblName.Depth = 0
-        lblName.Font = New Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel)
+        lblName.Font = New Font("Roboto", 14.0F, FontStyle.Regular, GraphicsUnit.Pixel)
         lblName.Location = New Point(49, 3)
         lblName.MouseState = MaterialSkin.MouseState.HOVER
         lblName.Name = "lblName"
@@ -65,7 +64,7 @@ Partial Class Post
         ' 
         lblUsername.AutoSize = True
         lblUsername.Depth = 0
-        lblUsername.Font = New Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel)
+        lblUsername.Font = New Font("Roboto", 14.0F, FontStyle.Regular, GraphicsUnit.Pixel)
         lblUsername.Location = New Point(49, 24)
         lblUsername.MouseState = MaterialSkin.MouseState.HOVER
         lblUsername.Name = "lblUsername"
@@ -78,7 +77,7 @@ Partial Class Post
         lblTime.Anchor = AnchorStyles.Top Or AnchorStyles.Right
         lblTime.AutoSize = True
         lblTime.Depth = 0
-        lblTime.Font = New Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel)
+        lblTime.Font = New Font("Roboto", 14.0F, FontStyle.Regular, GraphicsUnit.Pixel)
         lblTime.Location = New Point(1382, 3)
         lblTime.MouseState = MaterialSkin.MouseState.HOVER
         lblTime.Name = "lblTime"
@@ -89,7 +88,7 @@ Partial Class Post
         ' lblContent
         ' 
         lblContent.Depth = 0
-        lblContent.Font = New Font("Roboto", 24F, FontStyle.Bold, GraphicsUnit.Pixel)
+        lblContent.Font = New Font("Roboto", 24.0F, FontStyle.Bold, GraphicsUnit.Pixel)
         lblContent.FontType = MaterialSkin.MaterialSkinManager.fontType.H5
         lblContent.Location = New Point(7, 59)
         lblContent.MaximumSize = New Size(1486, 0)
@@ -104,38 +103,38 @@ Partial Class Post
         lblReplies.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
         lblReplies.AutoSize = True
         lblReplies.Depth = 0
-        lblReplies.Font = New Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel)
-        lblReplies.Location = New Point(53, 189)
+        lblReplies.Font = New Font("Roboto", 14.0F, FontStyle.Regular, GraphicsUnit.Pixel)
+        lblReplies.Location = New Point(7, 244)
         lblReplies.MouseState = MaterialSkin.MouseState.HOVER
         lblReplies.Name = "lblReplies"
-        lblReplies.Size = New Size(10, 19)
+        lblReplies.Size = New Size(51, 19)
         lblReplies.TabIndex = 6
-        lblReplies.Text = "7"
+        lblReplies.Text = "7 Likes"
         ' 
         ' lblReposts
         ' 
         lblReposts.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
         lblReposts.AutoSize = True
         lblReposts.Depth = 0
-        lblReposts.Font = New Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel)
-        lblReposts.Location = New Point(393, 189)
+        lblReposts.Font = New Font("Roboto", 14.0F, FontStyle.Regular, GraphicsUnit.Pixel)
+        lblReposts.Location = New Point(682, 244)
         lblReposts.MouseState = MaterialSkin.MouseState.HOVER
         lblReposts.Name = "lblReposts"
-        lblReposts.Size = New Size(10, 19)
+        lblReposts.Size = New Size(71, 19)
         lblReposts.TabIndex = 8
-        lblReposts.Text = "3"
+        lblReposts.Text = "3 Reposts"
         ' 
         ' lblLikes
         ' 
-        lblLikes.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
+        lblLikes.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
         lblLikes.Depth = 0
-        lblLikes.Font = New Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel)
-        lblLikes.Location = New Point(777, 189)
+        lblLikes.Font = New Font("Roboto", 14.0F, FontStyle.Regular, GraphicsUnit.Pixel)
+        lblLikes.Location = New Point(1344, 244)
         lblLikes.MouseState = MaterialSkin.MouseState.HOVER
         lblLikes.Name = "lblLikes"
-        lblLikes.Size = New Size(67, 19)
+        lblLikes.Size = New Size(92, 19)
         lblLikes.TabIndex = 10
-        lblLikes.Text = "7.3k"
+        lblLikes.Text = "7.3k Likes"
         ' 
         ' LinkLabel1
         ' 
@@ -155,46 +154,23 @@ Partial Class Post
         Button1.TabIndex = 12
         Button1.UseVisualStyleBackColor = False
         ' 
-        ' btnLike
+        ' PictureBox1
         ' 
-        btnLike.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
-        btnLike.BackColor = Color.Transparent
-        btnLike.Image = My.Resources.Resources.like_unfilled
-        btnLike.Location = New Point(731, 179)
-        btnLike.Name = "btnLike"
-        btnLike.Size = New Size(40, 40)
-        btnLike.TabIndex = 13
-        btnLike.UseVisualStyleBackColor = False
-        ' 
-        ' Button2
-        ' 
-        Button2.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
-        Button2.BackColor = Color.Transparent
-        Button2.Image = My.Resources.Resources.repost
-        Button2.Location = New Point(347, 179)
-        Button2.Name = "Button2"
-        Button2.Size = New Size(40, 40)
-        Button2.TabIndex = 14
-        Button2.UseVisualStyleBackColor = False
-        ' 
-        ' Button3
-        ' 
-        Button3.Anchor = AnchorStyles.Bottom Or AnchorStyles.Left
-        Button3.BackColor = Color.Transparent
-        Button3.Image = My.Resources.Resources.reply
-        Button3.Location = New Point(7, 179)
-        Button3.Name = "Button3"
-        Button3.Size = New Size(40, 40)
-        Button3.TabIndex = 15
-        Button3.UseVisualStyleBackColor = False
+        PictureBox1.Anchor = AnchorStyles.Bottom
+        PictureBox1.Enabled = False
+        PictureBox1.Location = New Point(7, 178)
+        PictureBox1.Name = "PictureBox1"
+        PictureBox1.Size = New Size(1429, 50)
+        PictureBox1.SizeMode = PictureBoxSizeMode.AutoSize
+        PictureBox1.TabIndex = 16
+        PictureBox1.TabStop = False
+        PictureBox1.Visible = False
         ' 
         ' Post
         ' 
-        AutoScaleDimensions = New SizeF(10F, 25F)
+        AutoScaleDimensions = New SizeF(10.0F, 25.0F)
         AutoScaleMode = AutoScaleMode.Font
-        Controls.Add(Button3)
-        Controls.Add(Button2)
-        Controls.Add(btnLike)
+        Controls.Add(PictureBox1)
         Controls.Add(Button1)
         Controls.Add(LinkLabel1)
         Controls.Add(lblLikes)
@@ -204,15 +180,16 @@ Partial Class Post
         Controls.Add(lblTime)
         Controls.Add(lblUsername)
         Controls.Add(lblName)
-        Controls.Add(PictureBox1)
+        Controls.Add(avatarImage)
         Name = "Post"
-        Size = New Size(1442, 224)
+        Size = New Size(1442, 279)
+        CType(avatarImage, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
 
-    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents avatarImage As PictureBox
     Friend WithEvents lblName As MaterialSkin.Controls.MaterialLabel
     Friend WithEvents lblUsername As MaterialSkin.Controls.MaterialLabel
     Friend WithEvents lblTime As MaterialSkin.Controls.MaterialLabel
@@ -222,8 +199,6 @@ Partial Class Post
     Friend WithEvents lblLikes As MaterialSkin.Controls.MaterialLabel
     Friend WithEvents LinkLabel1 As LinkLabel
     Friend WithEvents Button1 As Button
-    Friend WithEvents btnLike As Button
-    Friend WithEvents Button2 As Button
-    Friend WithEvents Button3 As Button
+    Friend WithEvents PictureBox1 As PictureBox
 
 End Class

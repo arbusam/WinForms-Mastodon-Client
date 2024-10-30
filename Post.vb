@@ -1,5 +1,6 @@
 ﻿Public Class Post
-    Public Sub New(username As String, email As String, content As String, likes As Integer, replies As Integer, reposts As Integer, datePosted As Date, liked As Boolean)
+
+    Public Sub New(username As String, email As String, avatar As Image, content As String, image As Image, likes As Integer, replies As Integer, reposts As Integer, datePosted As Date, liked As Boolean)
         InitializeComponent()
 
         Dim likesString As String
@@ -33,24 +34,30 @@
         lblName.Text = username
         lblUsername.Text = email
         lblContent.Text = content
-        lblLikes.Text = likesString
-        lblReplies.Text = replies.ToString()
-        lblReposts.Text = reposts.ToString()
+        lblLikes.Text = likesString & " Likes"
+        lblReplies.Text = replies.ToString() & " Replies"
+        lblReposts.Text = reposts.ToString() & " Reposts"
         lblTime.Text = timeString
+        avatarImage.Image = avatar
 
-        If liked Then
-            btnLike.Image = My.Resources.like_filled
+        If image IsNot Nothing Then
+            PictureBox1.Image = image
+            PictureBox1.Enabled = True
+            PictureBox1.Visible = True
         End If
 
         AdjustHeight()
     End Sub
 
     Private Sub AdjustHeight()
-        ' Measure the height of lblTweetContent after setting the text
         lblContent.Height = TextRenderer.MeasureText(lblContent.Text, lblContent.Font, New Size(lblContent.Width, Integer.MaxValue), TextFormatFlags.WordBreak).Height
 
-        ' Set the height of the UserControl based on content + padding for buttons
-        Me.Height = lblContent.Top + lblContent.Height + 50 ' Add padding for the buttons
+        If PictureBox1.Enabled Then
+            Me.Height = lblContent.Top + lblContent.Height + PictureBox1.Height * 1.2 + 50
+        Else
+            Me.Height = lblContent.Top + lblContent.Height + 50
+        End If
+
     End Sub
 
     Private Sub Post_Load(sender As Object, e As EventArgs) Handles MyBase.Load

@@ -6,14 +6,18 @@ Imports System.Threading.Tasks
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 Imports System.ComponentModel
+Imports System.Drawing
+Imports System.IO
 
 Public Class Form1
     Inherits MaterialForm
     Private isDrawerOpen As Boolean = False
 
     Private maxID As String = "999999999999999999"
+    Private maxSearchID As String = "999999999999999999"
 
     Private isLoading As Boolean = False
+    Private searchIsLoading As Boolean = False
 
     Private trendingIsLoaded As Boolean = False
 
@@ -63,7 +67,6 @@ Public Class Form1
         materialSkinManager.ColorScheme = New ColorScheme(
             Primary.Blue600, Primary.Blue700, Primary.Blue200,
             Accent.LightBlue200, TextShade.WHITE)
-        PictureBox1.BackColor = ColorTranslator.FromHtml("#1E88E5")
     End Sub
 
     Async Sub Load_Public_Posts()
@@ -76,11 +79,33 @@ Public Class Form1
         For Each responsePost In jsonResponse
             Dim utcDate As DateTime = DateTime.ParseExact(responsePost("created_at"), format, System.Globalization.CultureInfo.InvariantCulture)
             Dim localDate As DateTime = utcDate.ToLocalTime()
-            Dim post As New Post(responsePost("account")("display_name"), responsePost("account")("acct"), HTML_To_Text(responsePost("content")), responsePost("favourites_count"), responsePost("replies_count"), responsePost("reblogs_count"), localDate, False)
-            FlowLayoutPanel1.Controls.Add(post)
+            Try
+                Dim post As Post
+                If responsePost("media_attachments").Count > 0 Then
+                    If responsePost("media_attachments")(0)("type") = "image" Then
+                        post = New Post(responsePost("account")("display_name"), responsePost("account")("acct"), Await DownloadImageAsync(responsePost("account")("avatar_static")), HTML_To_Text(responsePost("content")), Await DownloadImageAsync(responsePost("media_attachments")(0)("preview_url")), responsePost("favourites_count"), responsePost("replies_count"), responsePost("reblogs_count"), localDate, False)
+                    Else
+                        post = New Post(responsePost("account")("display_name"), responsePost("account")("acct"), Await DownloadImageAsync(responsePost("account")("avatar_static")), HTML_To_Text(responsePost("content")), Nothing, responsePost("favourites_count"), responsePost("replies_count"), responsePost("reblogs_count"), localDate, False)
+                    End If
+                Else
+                    post = New Post(responsePost("account")("display_name"), responsePost("account")("acct"), Await DownloadImageAsync(responsePost("account")("avatar_static")), HTML_To_Text(responsePost("content")), Nothing, responsePost("favourites_count"), responsePost("replies_count"), responsePost("reblogs_count"), localDate, False)
+                End If
+                FlowLayoutPanel1.Controls.Add(post)
+            Catch e As Exception
+                Console.WriteLine("Error loading post: " & e.ToString())
+            End Try
         Next
         isLoading = False
     End Sub
+    Private Async Function DownloadImageAsync(url As String) As Task(Of Image)
+        Using client As New HttpClient()
+            Dim response As HttpResponseMessage = Await client.GetAsync(url)
+            response.EnsureSuccessStatusCode()
+            Dim stream As Stream = Await response.Content.ReadAsStreamAsync()
+            Return Image.FromStream(stream)
+        End Using
+    End Function
+
 
     Async Sub Load_Trending_Posts()
         Dim url As String = "https://mastodon.social/api/v1/trends/statuses?limit=40"
@@ -88,12 +113,24 @@ Public Class Form1
         Dim jsonResponse As JArray = JArray.Parse(response)
         Dim format As String = "MM/dd/yyyy HH:mm:ss"
         Dim lastResponse As JToken = jsonResponse.Last
-        maxID = lastResponse("id")
         For Each responsePost In jsonResponse
             Dim utcDate As DateTime = DateTime.ParseExact(responsePost("created_at"), format, System.Globalization.CultureInfo.InvariantCulture)
             Dim localDate As DateTime = utcDate.ToLocalTime()
-            Dim post As New Post(responsePost("account")("display_name"), responsePost("account")("acct"), HTML_To_Text(responsePost("content")), responsePost("favourites_count"), responsePost("replies_count"), responsePost("reblogs_count"), localDate, False)
-            FlowLayoutPanel2.Controls.Add(post)
+            Try
+                Dim post As Post
+                If responsePost("media_attachments").Count > 0 Then
+                    If responsePost("media_attachments")(0)("type") = "image" Then
+                        post = New Post(responsePost("account")("display_name"), responsePost("account")("acct"), Await DownloadImageAsync(responsePost("account")("avatar_static")), HTML_To_Text(responsePost("content")), Await DownloadImageAsync(responsePost("media_attachments")(0)("preview_url")), responsePost("favourites_count"), responsePost("replies_count"), responsePost("reblogs_count"), localDate, False)
+                    Else
+                        post = New Post(responsePost("account")("display_name"), responsePost("account")("acct"), Await DownloadImageAsync(responsePost("account")("avatar_static")), HTML_To_Text(responsePost("content")), Nothing, responsePost("favourites_count"), responsePost("replies_count"), responsePost("reblogs_count"), localDate, False)
+                    End If
+                Else
+                    post = New Post(responsePost("account")("display_name"), responsePost("account")("acct"), Await DownloadImageAsync(responsePost("account")("avatar_static")), HTML_To_Text(responsePost("content")), Nothing, responsePost("favourites_count"), responsePost("replies_count"), responsePost("reblogs_count"), localDate, False)
+                End If
+                FlowLayoutPanel2.Controls.Add(post)
+            Catch e As Exception
+                Console.WriteLine("Error loading post: " & e.ToString())
+            End Try
         Next
 
         Dim label As Label = New MaterialLabel With {
@@ -104,6 +141,38 @@ Public Class Form1
         }
         FlowLayoutPanel2.Controls.Add(label)
         trendingIsLoaded = True
+    End Sub
+
+    Async Sub Load_Search_Posts()
+        Dim url As String = "https://mastodon.social/api/v1/timelines/tag/" & MaterialTextBox21.Text & "?limit=10&max_id=" & maxSearchID
+        Dim response As String = Await GetRequestAsync(url)
+        If response = "[]" Then
+            Exit Sub
+        End If
+        Dim jsonResponse As JArray = JArray.Parse(response)
+        Dim format As String = "MM/dd/yyyy HH:mm:ss"
+        Dim lastResponse As JToken = jsonResponse.Last
+        maxSearchID = lastResponse("id")
+        For Each responsePost In jsonResponse
+            Dim utcDate As DateTime = DateTime.ParseExact(responsePost("created_at"), format, System.Globalization.CultureInfo.InvariantCulture)
+            Dim localDate As DateTime = utcDate.ToLocalTime()
+            Try
+                Dim post As Post
+                If responsePost("media_attachments").Count > 0 Then
+                    If responsePost("media_attachments")(0)("type") = "image" Then
+                        post = New Post(responsePost("account")("display_name"), responsePost("account")("acct"), Await DownloadImageAsync(responsePost("account")("avatar_static")), HTML_To_Text(responsePost("content")), Await DownloadImageAsync(responsePost("media_attachments")(0)("preview_url")), responsePost("favourites_count"), responsePost("replies_count"), responsePost("reblogs_count"), localDate, False)
+                    Else
+                        post = New Post(responsePost("account")("display_name"), responsePost("account")("acct"), Await DownloadImageAsync(responsePost("account")("avatar_static")), HTML_To_Text(responsePost("content")), Nothing, responsePost("favourites_count"), responsePost("replies_count"), responsePost("reblogs_count"), localDate, False)
+                    End If
+                Else
+                    post = New Post(responsePost("account")("display_name"), responsePost("account")("acct"), Await DownloadImageAsync(responsePost("account")("avatar_static")), HTML_To_Text(responsePost("content")), Nothing, responsePost("favourites_count"), responsePost("replies_count"), responsePost("reblogs_count"), localDate, False)
+                End If
+                FlowLayoutPanel3.Controls.Add(post)
+            Catch e As Exception
+                Console.WriteLine("Error loading post: " & e.ToString())
+            End Try
+        Next
+        searchIsLoading = False
     End Sub
 
 
@@ -159,5 +228,23 @@ Public Class Form1
 
     Private Sub MaterialTabControl1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MaterialTabControl1.SelectedIndexChanged
         Load_Posts()
+    End Sub
+
+    Private Sub MaterialButton1_Click(sender As Object, e As EventArgs) Handles MaterialButton1.Click
+        FlowLayoutPanel3.Controls.Clear()
+        If Not MaterialTextBox21.Text = "" And MaterialTextBox21.Text IsNot Nothing Then
+            Load_Search_Posts()
+        End If
+    End Sub
+
+    Private Sub FlowLayoutPanel3_MouseWheel(sender As Object, e As MouseEventArgs) Handles FlowLayoutPanel3.MouseWheel
+        ' Check if the user has scrolled to the bottom
+        If FlowLayoutPanel3.VerticalScroll.Value + FlowLayoutPanel3.ClientSize.Height >= FlowLayoutPanel3.VerticalScroll.Maximum Then
+            ' Load more tweets if not already loading
+            If Not searchIsLoading Then
+                searchIsLoading = True
+                Load_Search_Posts()
+            End If
+        End If
     End Sub
 End Class
